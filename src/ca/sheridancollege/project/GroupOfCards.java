@@ -17,12 +17,12 @@ public class GroupOfCards
 {
 private static int cash;
 private static int bet;
-private static int AceCounter;
+private static int aceCounter;
 private static ArrayList<Card> hand;
 private static int handvalue;
 private static String name;
 public static void main(String[] args){
-    System.out.println("Hello! What is your name?");
+    System.out.println("Hello! \n What is your name?");
     Scanner sc = new Scanner(System.in);
     name = sc.nextLine();
     System.out.println("Hello, "+name+", lets have some fun with BlackJack!");
@@ -33,7 +33,7 @@ public static void main(String[] args){
     while(cash>0){
         Player player = new Player();
         player.shuffle();
-        AceCounter=0;
+        aceCounter=0;
         Game game = new Game(player);
         List<Card> hand = new ArrayList<>();
         hand.add(player.drawCard());
@@ -42,9 +42,8 @@ public static void main(String[] args){
         bet=Bet(cash);
         System.out.println("Cash:"+(cash-bet));
         System.out.println("Money on the table:"+bet);
-        System.out.println("Here is your hand: ");
-        System.out.println(hand);
-        int handvalue = calcHandValue(hand);
+        System.out.println("Here is your hand: "+hand);
+        int handvalue = cal(hand);
         System.out.println("Other player is  showing: ");
         game.showFirstCard();
         if(hasBlackJack(handvalue) && game.hasBlackJack())
@@ -97,8 +96,8 @@ public static void main(String[] args){
                 Hit(player, hand);
                 System.out.println("Your hand is now:");
                 System.out.println(hand);
-                handvalue = calcHandValue(hand);
-                if(checkBust(handvalue))
+                handvalue = cal(hand);
+                if(bust(handvalue))
                 {
                     Lose();
                     break;
@@ -171,7 +170,7 @@ public static boolean hasBlackJack(int handValue)
     }
     return false;
 }
-public static int calcHandValue(List<Card> hand)
+public static int cal(List<Card> hand)
 {
     Card[] aHand = new Card[]{};
     aHand = hand.toArray(aHand);
@@ -181,12 +180,12 @@ public static int calcHandValue(List<Card> hand)
         handvalue += aHand[i].getValue();
         if(aHand[i].getValue()==11)
         {
-            AceCounter++;
+            aceCounter++;
         }
-        while(AceCounter>0 && handvalue>21)
+        while(aceCounter>0 && handvalue>21)
         {
             handvalue-=10;
-            AceCounter--;
+            aceCounter--;
         }
     }
     return handvalue;
@@ -232,12 +231,12 @@ public static void Hit(Player player, List<Card> hand)
         handvalue += aHand[i].getValue();
         if(aHand[i].getValue()==11)
         {
-            AceCounter++;
+            aceCounter++;
         }
-        while(AceCounter>0 && handvalue>21)
+        while(aceCounter>0 && handvalue>21)
         {
             handvalue-=10;
-            AceCounter--;
+            aceCounter--;
         }
     }
 }
@@ -250,7 +249,7 @@ public static boolean isHitorStand(String hitter)
     }
     return false;
 }
-public static boolean checkBust(int handvalue)
+public static boolean bust(int handvalue)
 {
     if(handvalue>21)
     {

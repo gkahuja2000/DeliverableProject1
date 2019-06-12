@@ -16,12 +16,12 @@ public class Game {
       ArrayList<Card> hand;
       private int handvalue =0;
       private Card[] aHand;
-      private int AceCounter;
+      private int aceCounter;
           
      Game(Player player){
      hand = new ArrayList<>();
      aHand = new Card[]{};
-     int AceCounter =0;
+     int aceCounter =0;
      for( int i =0; i<2 ; i++){
        hand.add(player.drawCard());
      }
@@ -29,11 +29,11 @@ public class Game {
      for(int i=0; i<aHand.length; i++){
        handvalue += aHand[i].getValue();
        if(aHand[i].getValue()==11){
-         AceCounter++;
+         aceCounter++;
        }
-       while(AceCounter>0 && handvalue>21){
+       while(aceCounter>0 && handvalue>21){
          handvalue = handvalue-10;
-         AceCounter--;
+         aceCounter--;
        }
      }
 }
@@ -50,11 +50,11 @@ public class Game {
      for(int i=0;i<aHand.length;i++){
       handvalue += aHand[i].getValue();
       if(aHand[i].getValue()==11){
-      AceCounter++;
+      aceCounter++;
       }
-      while(AceCounter>0 && handvalue>21){
+      while(aceCounter>0 && handvalue>21){
            handvalue-=10;
-           AceCounter--;
+           aceCounter--;
       }
      }
 }
