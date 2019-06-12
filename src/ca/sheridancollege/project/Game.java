@@ -10,93 +10,61 @@ import java.util.ArrayList;
 /**
  * The class that models your game. You should create a more specific
  * child of this class and instantiate the methods given.
- * @author warriors 11-06-2019
+ * @author dancye, 2018
  */
-public class Game {
-      ArrayList<Card> hand;
-      private int handvalue =0;
-      private Card[] aHand;
-      private int aceCounter;
-          
-     Game(Player player){
-     hand = new ArrayList<>();
-     aHand = new Card[]{};
-     int aceCounter =0;
-     for( int i =0; i<2 ; i++){
-       hand.add(player.drawCard());
-     }
-     aHand = hand.toArray(aHand);
-     for(int i=0; i<aHand.length; i++){
-       handvalue += aHand[i].getValue();
-       if(aHand[i].getValue()==11){
-         aceCounter++;
-       }
-       while(aceCounter>0 && handvalue>21){
-         handvalue = handvalue-10;
-         aceCounter--;
-       }
-     }
-}
-     public void showFirstCard(){
-         Card[] firstCard = new Card[]{};
-         firstCard = hand.toArray(firstCard);
-         System.out.println("["+firstCard[0]+"]");
-     }
-     public void Hit(Player player){
-     
-     hand.add(player.drawCard());
-     aHand = hand.toArray(aHand);
-     handvalue =0;
-     for(int i=0;i<aHand.length;i++){
-      handvalue += aHand[i].getValue();
-      if(aHand[i].getValue()==11){
-      aceCounter++;
-      }
-      while(aceCounter>0 && handvalue>21){
-           handvalue-=10;
-           aceCounter--;
-      }
-     }
-}
-     public boolean wantsToHit(){
-        if(handvalue<17){
-        return true;
-        }
-        return false;
-     }
-     public boolean hasBlackJack(){
-     if(hand.size()==2 && handvalue == 21){
-         System.out.println("You have a blackjack");
-         return true;
-     }
-     return false;
-     }
-     public void showHand(){
-         System.out.println(hand);
-     }
-
-    public int getHandvalue() {
-        return handvalue;
+public abstract class Game 
+{
+    private final String gameName;//the title of the game
+    private ArrayList <Player> players;// the players of the game
+    
+    public Game(String givenName)
+    {
+        gameName = givenName;//givenName value is assigned to gameName
+        players = new ArrayList();//arrayList value is assigned to players
     }
-     public boolean busted(int handvalue){
-       if(handvalue>21){
-           System.out.println("You busted buddy!");
-           return true;
-     }
-       return false;
-    }
-     public int takeTurn(Player player){
-      while(wantsToHit()){
-          System.out.println("You hit");
-          Hit(player);
-          if(busted(handvalue)){
-              break;
-              }        
-      } 
-      if(handvalue<=21){
-          System.out.println("You stand.");       
-      }
-      return handvalue;
-     }
 
-}
+    /**
+     * @return the gameName
+     */
+    public String getGameName() 
+    {
+        return gameName;//this method will get gamename We used this method because our gamename variable was private 
+        // in order to reset its value we need to call set method.
+    }
+    
+     /**
+     * @return the players of this game
+     */
+    public ArrayList <Player> getPlayers() 
+    {
+        return players;//this method will get players array We used this method because our player variable was private 
+        // in order to reset its value we need to call get method.
+    }
+
+    /**
+     * @param players the players of this game
+     */
+    public void setPlayers(ArrayList <Player> players) 
+    {
+        this.players = players;//this method will set players array We used this method because our players variable was private 
+        // in order to reset its value we need to call set method.
+    }
+    
+    /**
+     * Play the game. This might be one method or many method calls depending
+     * on your game.
+     */
+    public abstract void play();// play method is called
+    //void is used because it will not return anything.
+   // abstract is used when class or method is not to be intilized.
+    
+    /**
+     * When the game is over, use this method to declare and display a winning
+     * player.
+     */
+    public abstract void declareWinner();// declareWinner method is called in order to declare the winner of the game
+    //void is used because it will not return anything.
+   // abstract is used when class or method is not to be intilized.
+   
+    
+}//end class
